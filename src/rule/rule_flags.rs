@@ -16,19 +16,7 @@ pub enum RuleFlag {
     NoSync,
     SrcTrack,
     RuleSrcTrack,
-    SetDelay,
 }
-
-// FIXME: take these constants from pfvar
-pub const PFRULE_DROP: u8 = 0;
-pub const PFRULE_RETURNRST: u8 = 1;
-pub const PFRULE_FRAGMENT: u8 = 0x2;
-pub const PFRULE_RETURNICMP: u8 = 0x4;
-pub const PFRULE_RETURN: u8 = 0x8;
-pub const PFRULE_NOSYNC: u8 = 0x10;
-pub const PFRULE_SRCTRACK: u8 = 0x20;
-pub const PFRULE_RULESRCTRACK: u8 = 0x40;
-pub const PFRULE_SETDELAY: u8 = 0x80;
 
 impl Default for RuleFlag {
     fn default() -> Self {
@@ -38,6 +26,7 @@ impl Default for RuleFlag {
 
 impl From<RuleFlag> for u32 {
     fn from(rule_flag: RuleFlag) -> Self {
+        use crate::ffi::pfvar::*;
         match rule_flag {
             RuleFlag::Drop => PFRULE_DROP as u32,
             RuleFlag::ReturnRst => PFRULE_RETURNRST as u32,
@@ -47,7 +36,6 @@ impl From<RuleFlag> for u32 {
             RuleFlag::NoSync => PFRULE_NOSYNC as u32,
             RuleFlag::SrcTrack => PFRULE_SRCTRACK as u32,
             RuleFlag::RuleSrcTrack => PFRULE_RULESRCTRACK as u32,
-            RuleFlag::SetDelay => PFRULE_SETDELAY as u32,
         }
     }
 }
